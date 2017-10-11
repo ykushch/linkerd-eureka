@@ -1,0 +1,15 @@
+# Scala specific
+*.class
+*.log
+target
+*.class
+
+# Intellij Idea specific
+*.iml
+*.ipr
+*.iws
+.idea
+out
+
+# Other
+.DS_Store
