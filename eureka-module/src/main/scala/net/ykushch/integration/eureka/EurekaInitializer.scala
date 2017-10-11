@@ -6,16 +6,19 @@ import io.buoyant.config.types.{HostAndPort, Port}
 import io.buoyant.namer.{NamerConfig, NamerInitializer}
 
 class EurekaInitializer extends NamerInitializer {
-  val configClass: Class[EurekaConfig] = classOf[EurekaConfig]
+  override def configClass: Class[EurekaConfig] = classOf[EurekaConfig]
   override def configId = "io.l5d.eureka"
 }
 
-object ServersetsInitializer extends EurekaInitializer
+object EurekaInitializerInstance extends EurekaInitializer
 
 case class EurekaConfig(ekAddrs: Seq[HostAndPort]) extends NamerConfig {
 
+  // new plugin must be experimental by default
+  override def experimentalRequired: Boolean = true
+
   @JsonIgnore
-  override def defaultPrefix: Path = Path.read("/io.l5d.eureka")
+  override def defaultPrefix: Path = Path.read("io.l5d.eureka")
 
   @JsonIgnore
   val connectString: String = ekAddrs.map(_.toString(defaultPort = Port.apply(8761))).mkString(",")

@@ -1,9 +1,12 @@
 package net.ykushch.integration.eureka
 
 import com.twitter.finagle._
+import com.twitter.logging.Logger
 import com.twitter.util.{Activity, Var}
 
 class EurekaNamer(ekHost: String, idPrefix: Path) extends Namer {
+
+  private[this] val log = Logger.get(getClass.getName)
 
   /** Resolve a resolver string to a Var[Addr]. */
   protected[this] def resolve(spec: String): Var[Addr] = Resolver.eval(spec) match {
